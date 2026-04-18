@@ -10,20 +10,39 @@
 :root{
   --bg:#030f07; --card:#081c10;
   --green:#3c8a5a; --green-lt:#62b87a;
+  --deny:#6a3a3a;  --deny-lt:#c07070;
   --text:#d0eed8; --text-md:#96c8a4; --muted:#4e6a58;
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Lora',serif;}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;z-index:10;opacity:0;pointer-events:none;transition:opacity 0.7s ease;}
 .screen.active{opacity:1;pointer-events:all;}
+
+/* ── LOGO ── */
 .logo{font-family:'Cinzel Decorative',serif;font-weight:900;font-size:clamp(3rem,11vw,6rem);line-height:1.05;text-align:center;color:var(--green-lt);text-shadow:0 0 40px rgba(98,184,122,0.55),0 0 90px rgba(60,138,90,0.3);margin-bottom:0.5rem;}
 .logo-sub{font-family:'Cinzel',serif;font-size:clamp(0.65rem,2vw,0.9rem);letter-spacing:0.4em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:3rem;}
 .rule{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);margin:1rem auto;}
+
+/* ── BUTTONS ── */
 .btn{font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s ease;display:inline-block;}
 .btn-primary{background:var(--green);color:#030f07;padding:1rem 3rem;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);}
 .btn-primary:hover{background:var(--green-lt);transform:scale(1.04);filter:drop-shadow(0 0 16px rgba(98,184,122,0.5));}
 .btn-secondary{background:transparent;color:var(--text-md);padding:0.8rem 2.2rem;border:1px solid rgba(60,138,90,0.38);}
 .btn-secondary:hover{color:var(--green-lt);border-color:var(--green-lt);}
+
+/* ── MUTE BUTTON ── */
+#mute-btn{
+  position:fixed;top:1.1rem;right:1.2rem;z-index:200;
+  background:rgba(8,28,16,0.85);border:1px solid rgba(60,138,90,0.3);
+  color:var(--muted);font-size:1.1rem;width:2.4rem;height:2.4rem;
+  border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:color 0.2s,border-color 0.2s,background 0.2s;
+  backdrop-filter:blur(4px);
+}
+#mute-btn:hover{color:var(--green-lt);border-color:var(--green-lt);}
+#mute-btn.muted{color:var(--deny-lt);border-color:rgba(160,80,80,0.4);}
+
+/* ── INTRO ── */
 .intro-panel{background:rgba(6,22,12,0.96);border:1px solid rgba(60,138,90,0.28);padding:2.6rem 2.2rem;max-width:500px;width:100%;text-align:center;backdrop-filter:blur(6px);}
 .intro-panel h2{font-family:'Cinzel',serif;font-size:1.45rem;color:var(--green-lt);margin-bottom:0.4rem;}
 .intro-panel p{font-size:1rem;line-height:1.95;color:var(--text-md);margin-bottom:1.5rem;}
@@ -32,21 +51,49 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 @keyframes swingDemo{0%,100%{transform:translateX(0) rotate(0deg);}30%{transform:translateX(-32px) rotate(-12deg);}70%{transform:translateX(32px) rotate(12deg);}}
 .demo-arrows{position:absolute;width:175px;display:flex;justify-content:space-between;font-size:1.5rem;color:var(--muted);}
 .demo-hint{font-size:0.75rem;letter-spacing:0.15em;color:var(--muted);margin-bottom:1.8rem;}
+
+/* ── DUEL ── */
 .duel-header{text-align:center;margin-bottom:0.5rem;}
 .duel-progress{font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.28em;color:var(--muted);margin-bottom:0.5rem;}
 .progress-bar-wrap{width:min(440px,94vw);height:2px;background:rgba(60,138,90,0.18);margin:0 auto 0.7rem;border-radius:2px;overflow:hidden;}
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-lt));transition:width 0.4s ease;border-radius:2px;}
 .duel-question{font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.15em;color:var(--text-md);text-transform:uppercase;}
+
+/* ── STATEMENT CARD ── */
 .card-wrap{position:relative;width:min(500px,96vw);height:max(300px,46vh);user-select:none;touch-action:none;margin:1.2rem 0;}
-.duel-card{position:absolute;inset:0;background:var(--card);border:1px solid rgba(60,138,90,0.3);display:flex;cursor:grab;will-change:transform;box-shadow:0 8px 50px rgba(0,0,0,0.55);}
-.duel-card:active{cursor:grabbing;}
-.half{flex:1;display:flex;align-items:center;justify-content:center;padding:2.4rem 1.8rem;font-style:italic;font-size:1.15rem;font-weight:600;line-height:1.65;text-align:center;color:var(--text);transition:background 0.15s,color 0.15s;}
-.half.left{border-right:1px solid rgba(60,138,90,0.18);}
-.half.lit{background:rgba(60,138,90,0.2);color:var(--green-lt);}
-.card-or{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.12em;color:var(--muted);background:var(--card);padding:0.3rem 0.55rem;z-index:5;pointer-events:none;border:1px solid rgba(60,138,90,0.12);}
-.side-ind{position:absolute;top:50%;transform:translateY(-50%);font-size:2.5rem;opacity:0;transition:opacity 0.15s;pointer-events:none;color:var(--green-lt);}
-.side-ind.l{left:-3.2rem;} .side-ind.r{right:-3.2rem;} .side-ind.show{opacity:1;}
-.swipe-label{display:flex;justify-content:space-between;width:min(500px,96vw);font-size:0.68rem;letter-spacing:0.12em;color:var(--muted);font-family:'Cinzel',serif;}
+.stmt-card{
+  position:absolute;inset:0;
+  background:var(--card);
+  border:1px solid rgba(60,138,90,0.3);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  cursor:grab;will-change:transform;
+  box-shadow:0 8px 50px rgba(0,0,0,0.55);
+  padding:2.5rem 2.5rem;
+  transition:border-color 0.2s;
+}
+.stmt-card:active{cursor:grabbing;}
+.stmt-card.agree { border-color:rgba(98,184,122,0.6); background:rgba(8,28,16,1); }
+.stmt-card.deny  { border-color:rgba(160,80,80,0.4);  background:rgba(20,8,8,0.9); }
+.stmt-text{
+  font-style:italic;font-size:clamp(1rem,3.5vw,1.3rem);font-weight:600;
+  line-height:1.7;text-align:center;color:var(--text);
+  transition:color 0.2s;
+}
+.stmt-card.agree .stmt-text{color:var(--green-lt);}
+.stmt-card.deny  .stmt-text{color:var(--deny-lt);}
+
+/* side indicators */
+.side-ind{position:absolute;top:50%;transform:translateY(-50%);font-size:2.5rem;opacity:0;transition:opacity 0.15s;pointer-events:none;}
+.side-ind.l{left:-3.2rem;color:var(--deny-lt);}
+.side-ind.r{right:-3.2rem;color:var(--green-lt);}
+.side-ind.show{opacity:1;}
+
+.swipe-label{display:flex;justify-content:space-between;width:min(500px,96vw);font-size:0.68rem;letter-spacing:0.12em;color:var(--muted);font-family:'Cinzel',serif;margin-top:0.6rem;}
+.swipe-label .deny-lbl{color:rgba(192,112,112,0.7);}
+.swipe-label .agree-lbl{color:rgba(98,184,122,0.7);}
+
+/* ── RESULT ── */
 .result-wrap{text-align:center;animation:fadeUp 0.65s ease both;max-width:500px;width:100%;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 .result-type{font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
@@ -54,60 +101,66 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .portrait-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
 .result-name{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,7vw,3rem);margin-bottom:0.3rem;}
 .result-desc{font-size:0.97rem;line-height:1.9;color:var(--text-md);font-style:italic;margin:1rem auto 1.8rem;max-width:420px;}
-.music-hint{position:fixed;bottom:1.2rem;right:1.2rem;z-index:100;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--muted);opacity:0;transition:opacity 1s;}
-.music-hint.show{opacity:1;}
 </style>
 </head>
 <body>
 
 <canvas id="bg"></canvas>
+
 <audio id="bgm" loop preload="auto">
   <source src="https://raw.githubusercontent.com/schwitzermodus/eigengrau/main/Mists%20of%20the%20Greenwood%20Road.mp3" type="audio/mpeg">
 </audio>
-<div class="music-hint" id="music-hint">&#9836; Mists of the Greenwood Road</div>
 
+<!-- Mute Button (immer sichtbar) -->
+<button id="mute-btn" title="Musik an/aus" onclick="toggleMute()">&#9836;</button>
+
+<!-- START -->
 <div class="screen active" id="s-start">
   <div class="logo">Nebel<br>&amp; Schicksal</div>
   <div class="logo-sub">Ein Spiel der Helden &amp; Wege</div>
   <button class="btn btn-primary" onclick="gotoIntro()">Spiel starten</button>
 </div>
 
+<!-- INTRO -->
 <div class="screen" id="s-intro">
   <div class="intro-panel">
     <h2>Dein Held erwartet dich</h2>
     <div class="rule"></div>
-    <p>Du wirst zehn Entscheidungen treffen.<br>
-    Jedes Mal stehen sich zwei Aussagen gegenüber &ndash;<br>
-    wähle diejenige, die besser zu dir passt.<br><br>
+    <p>Du wirst zehn Aussagen begegnen.<br>
+    Stimmst du zu &ndash; wische nach rechts.<br>
+    Lehnst du ab &ndash; wische nach links.<br><br>
     Es gibt kein Richtig oder Falsch.<br>
     Aus deinen Entscheidungen entsteht dein Held.</p>
     <div class="demo-wrap">
       <div class="demo-arrows"><span>&#8592;</span><span>&#8594;</span></div>
       <div class="demo-card-el"></div>
     </div>
-    <div class="demo-hint">Nach links oder rechts wischen</div>
-    <button class="btn btn-primary" onclick="startDuels()">Beginnen</button>
+    <div class="demo-hint">Links = Nein &nbsp;&nbsp; Rechts = Ja</div>
+    <button class="btn btn-primary" onclick="startGame()">Beginnen</button>
   </div>
 </div>
 
+<!-- DUEL -->
 <div class="screen" id="s-duel">
   <div class="duel-header">
-    <div class="duel-progress" id="dp-label">ENTSCHEIDUNG 1 VON 10</div>
+    <div class="duel-progress" id="dp-label">AUSSAGE 1 VON 10</div>
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="dp-bar" style="width:0%"></div></div>
-    <div class="duel-question">Was trifft eher auf dich zu?</div>
+    <div class="duel-question">Trifft das auf dich zu?</div>
   </div>
   <div class="card-wrap">
-    <div class="side-ind l" id="ind-l">&#8592;</div>
-    <div class="side-ind r" id="ind-r">&#8594;</div>
-    <div class="duel-card" id="the-card">
-      <div class="half left" id="h-left"></div>
-      <div class="card-or">oder</div>
-      <div class="half right" id="h-right"></div>
+    <div class="side-ind l" id="ind-l">&#10005;</div>
+    <div class="side-ind r" id="ind-r">&#10003;</div>
+    <div class="stmt-card" id="the-card">
+      <div class="stmt-text" id="stmt-text"></div>
     </div>
   </div>
-  <div class="swipe-label"><span>&#8592; links wischen</span><span>rechts wischen &#8594;</span></div>
+  <div class="swipe-label">
+    <span class="deny-lbl">&#8592; Nein, trifft nicht zu</span>
+    <span class="agree-lbl">Ja, trifft zu &#8594;</span>
+  </div>
 </div>
 
+<!-- RESULT -->
 <div class="screen" id="s-result">
   <div class="result-wrap" id="result-wrap"></div>
 </div>
@@ -120,9 +173,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 const BASE = 'https://raw.githubusercontent.com/schwitzermodus/eigengrau/main/';
 
 // ── Archetypen ──────────────────────────────────────────────────
-// Neue Archetypen einfach hier ergänzen (Key = interne ID).
-// Benötigt: name, title, desc, img (Dateiname in BASE), accent, border
-
 const ARCHETYPES = {
   amara: {
     name:   'Amara',
@@ -166,21 +216,22 @@ const ARCHETYPES = {
   },
 };
 
-// ── Duelle ──────────────────────────────────────────────────────
-// Jedes Duell: links (l) vs. rechts (r), je mit Archetyp-Key (k) und Tag-Text (t).
-// Neue Tags hier ergänzen – Archetyp-Key muss in ARCHETYPES existieren.
+// ── Statements ──────────────────────────────────────────────────
+// Jedes Statement gehört zu einem Archetyp (k).
+// Zustimmung (rechts) = +1 Punkt für diesen Archetyp.
+// 2 Statements pro Archetyp = 10 gesamt.
 
-const DUELS = [
-  { l:{k:'amara', t:'Halte stand.'},                r:{k:'sable', t:'Regeln sind Vorschläge.'} },
-  { l:{k:'idris', t:'Ich beobachte zuerst.'},        r:{k:'lena',  t:'Menschen verstehen mich.'} },
-  { l:{k:'amara', t:'Erst schlagen, dann reden.'},   r:{k:'lena',  t:'Worte öffnen Türen.'} },
-  { l:{k:'vorn',  t:'Die Natur spricht zu mir.'},    r:{k:'idris', t:'Wissen schützt mehr als Stahl.'} },
-  { l:{k:'sable', t:'Niemand sieht mich kommen.'},   r:{k:'amara', t:'Mein Wort gilt.'} },
-  { l:{k:'lena',  t:'Ich brauche die Gemeinschaft.'},r:{k:'vorn',  t:'Ich gehöre nirgends ganz hin.'} },
-  { l:{k:'idris', t:'Ich stelle Fragen.'},           r:{k:'sable', t:'Überleben ist Kunst.'} },
-  { l:{k:'amara', t:'Loyalität über alles.'},        r:{k:'lena',  t:'Kein Feind ist unvermeidlich.'} },
-  { l:{k:'vorn',  t:'Ich folge dem Instinkt.'},      r:{k:'idris', t:'Das Alte hat Gründe.'} },
-  { l:{k:'sable', t:'Ich vertraue mir selbst.'},     r:{k:'vorn',  t:'Grenzen sind menschgemacht.'} },
+const STATEMENTS = [
+  { k:'amara', t:'Ich halte stand, egal was kommt.' },
+  { k:'sable', t:'Ich beobachte lieber, bevor ich handle.' },
+  { k:'idris', t:'Wissen schützt mich mehr als Stärke.' },
+  { k:'lena',  t:'Ich finde immer einen Weg, Menschen zu erreichen.' },
+  { k:'vorn',  t:'Ich verlasse mich auf meinen Instinkt.' },
+  { k:'amara', t:'Für die Menschen, die mir wichtig sind, gehe ich durch Feuer.' },
+  { k:'sable', t:'Regeln sind für mich Orientierung, kein Gesetz.' },
+  { k:'idris', t:'Ich stelle Fragen, wo andere einfach handeln.' },
+  { k:'lena',  t:'Kein Konflikt ist wirklich unvermeidlich.' },
+  { k:'vorn',  t:'Ich gehöre nirgends ganz hin – und das ist meine Stärke.' },
 ];
 
 // ╔══════════════════════════════════════════════════════════════╗
@@ -190,79 +241,108 @@ const DUELS = [
 let idx = 0, scores = {};
 function resetScores(){ scores = Object.fromEntries(Object.keys(ARCHETYPES).map(k=>[k,0])); }
 
-// Audio
-const bgm = document.getElementById('bgm');
-const musicHint = document.getElementById('music-hint');
-function startMusic(){
-  bgm.volume = 0.7;
-  bgm.play().then(()=>{
-    musicHint.classList.add('show');
-    setTimeout(()=>musicHint.classList.remove('show'), 4000);
-  }).catch(()=>{});
-}
-document.addEventListener('pointerdown', startMusic, {once:true});
+// ── Audio ────────────────────────────────────────────────────────
+const bgm     = document.getElementById('bgm');
+const muteBtn = document.getElementById('mute-btn');
+let muted = false;
+let musicStarted = false;
 
-// Screens
+function tryAutoplay(){
+  bgm.volume = 0.7;
+  bgm.play().then(()=>{ musicStarted = true; }).catch(()=>{
+    // Autoplay blocked – music will start on first user interaction
+    document.addEventListener('pointerdown', ()=>{
+      if(!musicStarted){ bgm.play().then(()=>{ musicStarted=true; }).catch(()=>{}); }
+    }, {once:true});
+  });
+}
+
+function toggleMute(){
+  muted = !muted;
+  bgm.muted = muted;
+  muteBtn.innerHTML  = muted ? '&#128263;' : '&#9836;';
+  muteBtn.classList.toggle('muted', muted);
+  // If music hasn't started yet, start it on unmute click
+  if(!muted && !musicStarted){
+    bgm.play().then(()=>{ musicStarted=true; }).catch(()=>{});
+  }
+}
+
+// Try to start immediately on page load
+window.addEventListener('DOMContentLoaded', tryAutoplay);
+
+// ── Screens ──────────────────────────────────────────────────────
 function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 function gotoIntro(){ show('s-intro'); }
-function startDuels(){ idx=0; resetScores(); renderDuel(); show('s-duel'); }
+function startGame(){ idx=0; resetScores(); renderStatement(); show('s-duel'); }
 
-// Duel
-function renderDuel(){
-  const d = DUELS[idx];
-  document.getElementById('dp-label').textContent = 'ENTSCHEIDUNG '+(idx+1)+' VON '+DUELS.length;
-  document.getElementById('dp-bar').style.width = (idx/DUELS.length*100)+'%';
-  document.getElementById('h-left').textContent  = d.l.t;
-  document.getElementById('h-right').textContent = d.r.t;
+// ── Statement logic ───────────────────────────────────────────────
+function renderStatement(){
+  const s = STATEMENTS[idx];
+  document.getElementById('dp-label').textContent = 'AUSSAGE '+(idx+1)+' VON '+STATEMENTS.length;
+  document.getElementById('dp-bar').style.width   = (idx/STATEMENTS.length*100)+'%';
+  document.getElementById('stmt-text').textContent = s.t;
   resetCard();
 }
-function choose(side){
-  scores[side==='left' ? DUELS[idx].l.k : DUELS[idx].r.k]++;
+
+function choose(agreed){
+  if(agreed) scores[STATEMENTS[idx].k]++;
   idx++;
-  if(idx>=DUELS.length) showResult(); else renderDuel();
+  if(idx >= STATEMENTS.length) showResult(); else renderStatement();
 }
 
-// Swipe with velocity
-const card=document.getElementById('the-card');
-const hL=document.getElementById('h-left'), hR=document.getElementById('h-right');
-const iL=document.getElementById('ind-l'),  iR=document.getElementById('ind-r');
+// ── Swipe with velocity ───────────────────────────────────────────
+const card = document.getElementById('the-card');
+const iL   = document.getElementById('ind-l');
+const iR   = document.getElementById('ind-r');
 let dragging=false, sx=0, cx=0, velocity=0, lastX=0, lastT=0;
 
 function resetCard(){
   dragging=false; velocity=0;
   card.style.transition='none'; card.style.transform=''; card.style.opacity='';
-  hL.classList.remove('lit'); hR.classList.remove('lit');
+  card.classList.remove('agree','deny');
   iL.classList.remove('show'); iR.classList.remove('show');
 }
+
 function onStart(x){ dragging=true; sx=cx=lastX=x; lastT=Date.now(); velocity=0; card.style.transition='none'; }
+
 function onMove(x){
   if(!dragging) return;
   const now=Date.now(), dt=now-lastT;
   if(dt>0) velocity=(x-lastX)/dt;
   lastX=x; lastT=now; cx=x;
   const dx=cx-sx;
-  card.style.transform='translateX('+dx+'px) rotate('+(dx*0.05)+'deg)';
-  if(dx<-20){      hL.classList.add('lit'); hR.classList.remove('lit'); iL.classList.add('show'); iR.classList.remove('show'); }
-  else if(dx>20){  hR.classList.add('lit'); hL.classList.remove('lit'); iR.classList.add('show'); iL.classList.remove('show'); }
-  else{            hL.classList.remove('lit'); hR.classList.remove('lit'); iL.classList.remove('show'); iR.classList.remove('show'); }
-}
-function onEnd(){
-  if(!dragging) return; dragging=false;
-  const dx=cx-sx, spd=Math.abs(velocity);
-  if(spd>0.25 || Math.abs(dx)>=80){
-    const dir=(velocity<-0.05||(Math.abs(velocity)<0.05&&dx<0))?'left':'right';
-    const flyX=dir==='left'?-900:900;
-    card.style.transition='transform 0.32s ease-out,opacity 0.32s ease-out';
-    card.style.transform='translateX('+flyX+'px) rotate('+(flyX*0.018)+'deg)';
-    card.style.opacity='0';
-    setTimeout(()=>choose(dir),320);
+  card.style.transform='translateX('+dx+'px) rotate('+(dx*0.04)+'deg)';
+  if(dx < -20){
+    card.classList.add('deny');  card.classList.remove('agree');
+    iL.classList.add('show');    iR.classList.remove('show');
+  } else if(dx > 20){
+    card.classList.add('agree'); card.classList.remove('deny');
+    iR.classList.add('show');    iL.classList.remove('show');
   } else {
-    card.style.transition='transform 0.45s cubic-bezier(0.34,1.56,0.64,1)';
-    card.style.transform='';
-    hL.classList.remove('lit'); hR.classList.remove('lit');
+    card.classList.remove('agree','deny');
     iL.classList.remove('show'); iR.classList.remove('show');
   }
 }
+
+function onEnd(){
+  if(!dragging) return; dragging=false;
+  const dx=cx-sx, spd=Math.abs(velocity);
+  if(spd > 0.25 || Math.abs(dx) >= 80){
+    const agreed = velocity > 0.05 || (Math.abs(velocity) < 0.05 && dx > 0);
+    const flyX   = agreed ? 900 : -900;
+    card.style.transition='transform 0.32s ease-out,opacity 0.32s ease-out';
+    card.style.transform='translateX('+flyX+'px) rotate('+(flyX*0.016)+'deg)';
+    card.style.opacity='0';
+    setTimeout(()=>choose(agreed), 320);
+  } else {
+    card.style.transition='transform 0.45s cubic-bezier(0.34,1.56,0.64,1)';
+    card.style.transform='';
+    card.classList.remove('agree','deny');
+    iL.classList.remove('show'); iR.classList.remove('show');
+  }
+}
+
 card.addEventListener('mousedown',  e=>onStart(e.clientX));
 window.addEventListener('mousemove',e=>{if(dragging)onMove(e.clientX);});
 window.addEventListener('mouseup',  ()=>onEnd());
@@ -270,22 +350,24 @@ card.addEventListener('touchstart', e=>onStart(e.touches[0].clientX),{passive:tr
 window.addEventListener('touchmove',e=>{if(dragging)onMove(e.touches[0].clientX);},{passive:true});
 window.addEventListener('touchend', ()=>onEnd());
 
-// Result
+// ── Result ────────────────────────────────────────────────────────
 function showResult(){
   document.getElementById('dp-bar').style.width='100%';
-  const w=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
-  const a=ARCHETYPES[w];
+  const w = Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+  const a = ARCHETYPES[w];
   document.getElementById('result-wrap').innerHTML=
     '<div class="result-type">'+a.title+'</div>'+
-    '<div class="portrait-frame" style="border-color:'+a.border+';"><img src="'+a.img+'" alt="'+a.name+'"></div>'+
+    '<div class="portrait-frame" style="border-color:'+a.border+';">'+
+      '<img src="'+a.img+'" alt="'+a.name+'">'+
+    '</div>'+
     '<div class="result-name" style="color:'+a.accent+';text-shadow:0 0 24px '+a.accent+'66;">'+a.name+'</div>'+
     '<div class="rule"></div>'+
     '<div class="result-desc">'+a.desc+'</div>'+
-    '<button class="btn btn-secondary" onclick="startDuels()">Erneut spielen</button>';
+    '<button class="btn btn-secondary" onclick="startGame()">Erneut spielen</button>';
   show('s-result');
 }
 
-// Background canvas
+// ── Background canvas ─────────────────────────────────────────────
 const cvs=document.getElementById('bg'), c=cvs.getContext('2d');
 let pts=[];
 function resize(){ cvs.width=innerWidth; cvs.height=innerHeight; }
